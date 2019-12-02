@@ -12,6 +12,6 @@ Swedwise Leaderboard ID: [`113970-e98ccb11`](https://adventofcode.com/2019/leade
 
 ## Repository-struktur
 
-Det finns en katalog som heter `_templates`, där C# och Python-templates för att automatiskt hämta ut input-data för specificerad dag och köra förberedda lösnings-funktioner. Lägg gärna dit egna templates för andra språk!
+Det finns en katalog som heter `_templates`, där det finns C# och Python-templates för att automatiskt hämta ut input-data för specificerad dag och köra förberedda lösnings-funktioner. Lägg gärna dit egna templates för andra språk!
 
 I övrigt kan du skapa en egen katalog för dina lösningar och hantera som du vill!

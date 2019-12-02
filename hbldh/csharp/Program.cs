@@ -6,7 +6,7 @@ namespace AOC2019
     {
         static void Main(string[] args)
         {
-            int day = 1;
+            int day = 2;
             string sessionToken = "";
 
             Executor aoc = new Executor(sessionToken);

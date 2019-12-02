@@ -18,7 +18,17 @@ namespace AOC2019
             if (day is null)
             {
                 // Run all!
-                ExecuteDay(1);
+                for (int i = 1; i < 25; i++)
+                {
+                    try
+                    {
+                        ExecuteDay(i);
+                    }
+                    catch
+                    {
+                        // Let this pass silently...
+                    }
+                }
             }
             else
             {
@@ -33,7 +43,7 @@ namespace AOC2019
             Type t = Type.GetType($"AOC2019.Day{day}");
             IDay dayObj = (IDay)Activator.CreateInstance(t);
             var solutions = dayObj.Solve();
-            Console.WriteLine($"Day {day}:");
+            Console.WriteLine($" -* Day {day} *-");
             Console.WriteLine($"Part 1: {solutions.Item1}");
             Console.WriteLine($"Part 2: {solutions.Item2}");
             Console.WriteLine($"---------------------------");

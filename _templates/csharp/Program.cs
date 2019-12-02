@@ -6,7 +6,9 @@ namespace AOC2019
     {
         static void Main(string[] args)
         {
+            // Specify Day here!
             int day = 1;
+            // Get the session Cookie Value from your browser and paste it here!
             string sessionToken = "";
 
             Executor aoc = new Executor(sessionToken);
