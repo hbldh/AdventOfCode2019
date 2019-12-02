@@ -24,4 +24,4 @@ def calc(modweight):
 
 
 if __name__ == "__main__":
-    print(load_data("inp.txt"))
+    print(load_data("inp_d1.txt"))
