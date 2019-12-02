@@ -26,7 +26,7 @@ namespace AOC2019
 
         public string SolvePartTwo()
         {
-            return this.values.Select(v => RercursiveCalculateMass(v)).Sum().ToString();
+            return this.values.Select(v => RecursiveCalculateMass(v)).Sum().ToString();
         }
 
 
@@ -34,12 +34,12 @@ namespace AOC2019
         {
                 return Convert.ToInt32(Math.Floor((double)v / 3)) - 2;
         }
-        private int RercursiveCalculateMass(int v)
+        private int RecursiveCalculateMass(int v)
         {
             int r = Convert.ToInt32(Math.Floor((double)v / 3)) - 2;
             if (r > 0)
             {
-                return r + RercursiveCalculateMass(r);
+                return r + RecursiveCalculateMass(r);
             }
             else
             {
