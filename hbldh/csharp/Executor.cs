@@ -42,8 +42,8 @@ namespace AOC2019
             EnsureData((int)day);
             Type t = Type.GetType($"AOC2019.Day{day}");
             IDay dayObj = (IDay)Activator.CreateInstance(t);
-            var solutions = dayObj.Solve();
             Console.WriteLine($" -* Day {day} *-");
+            var solutions = dayObj.Solve();
             Console.WriteLine($"Part 1: {solutions.Item1}");
             Console.WriteLine($"Part 2: {solutions.Item2}");
             Console.WriteLine($"---------------------------");
