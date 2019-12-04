@@ -58,6 +58,6 @@ def cal_inter(wires):
     return min(inters_dist)
 
 if __name__ == '__main__':
-    data = load_data('inp.txt')
+    data = load_data('inp_d3.txt')
     wirecollection = cal_coord(data)
     print(cal_inter(wirecollection))
