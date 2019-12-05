@@ -1,7 +1,7 @@
 # Swedwise Advent of Code 2019
 
-URL: https://adventofcode.com/2019
-Swedwise Leaderboard ID: [`113970-e98ccb11`](https://adventofcode.com/2019/leaderboard/private)
+* URL: https://adventofcode.com/2019
+* Swedwise Leaderboard ID: [`113970-e98ccb11`](https://adventofcode.com/2019/leaderboard/private)
 
 ## Instruktioner
 
