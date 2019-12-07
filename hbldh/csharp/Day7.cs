@@ -5,62 +5,115 @@ using System.Collections.Generic;
 
 namespace AOC2019
 {
-    class Day5 : IDay
+    class Day7 : IDay
     {
         private readonly string data;
         private List<int> values;
 
-        public Day5()
+        public Day7()
         {
             var aocFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AOC2019");
-            this.data = File.ReadAllText(Path.Combine(aocFolder, "input05.txt"));
+            this.data = File.ReadAllText(Path.Combine(aocFolder, "input07.txt"));
             this.values = this.data.Split(',',options:StringSplitOptions.RemoveEmptyEntries).ToList().ConvertAll(int.Parse);
         }
 
         public string SolvePartOne()
         {
-            var c = new IntCodeComputerDay5(this.values, 1);
-            c.Process();
-            return c.outputs.Last().ToString();
+            var combos = Permutations(new List<int>() {0,1,2,3,4});
+            var results = new List<int>();
+            
+            foreach (var combo in combos)
+            {
+                var input = 0;
+                foreach (var phaseValue in combo)
+                {
+                    var c = new IntCodeComputerDay7(this.values, input, phaseValue);
+                    c.Process();
+                    input = c.outputs.Last();
+                }
+                results.Add(input);
+            }
+            
+            return results.Max().ToString();
         }
 
         public string SolvePartTwo()
         {
-            var c = new IntCodeComputerDay5(this.values, 5);
-            c.Process();
-            return c.outputs.Last().ToString();
+            var combos = Permutations(new List<int>() {5,6,7,8,9});
+            var results = new List<int>();
+            var keepRunning = true;
+
+            foreach (var combo in combos)
+            {
+                int input = 0;
+                keepRunning = true;
+                var computers = new List<IntCodeComputerDay7>() {
+                    new IntCodeComputerDay7(this.values, 0, combo.ToList()[0], false),
+                    new IntCodeComputerDay7(this.values, 0, combo.ToList()[1], false),
+                    new IntCodeComputerDay7(this.values, 0, combo.ToList()[2], false),
+                    new IntCodeComputerDay7(this.values, 0, combo.ToList()[3], false),
+                    new IntCodeComputerDay7(this.values, 0, combo.ToList()[4], false),
+                };
+
+                while (keepRunning)
+                {
+                    for (int i = 0; i < computers.Count; i++)
+                    {
+                        computers[i].input = input;
+                        computers[i].Process();
+                        input = computers[i].outputs.Last();
+                    }
+                    if (computers.Any(o => o.isDone))
+                    {
+                        keepRunning = false;
+                    }
+                }
+                results.Add(computers.Last().outputs.Last());
+            }
+            
+            return results.Max().ToString();
         }
+
+        public static ICollection<ICollection<T>> Permutations<T>(ICollection<T> list) {
+            var result = new List<ICollection<T>>();
+            if (list.Count == 1) { // If only one possible permutation
+                result.Add(list); // Add it and return it
+                return result;
+            }
+            foreach (var element in list) { // For each element in that list
+                var remainingList = new List<T>(list);
+                remainingList.Remove(element); // Get a list containing everything except of chosen element
+                foreach (var permutation in Permutations<T>(remainingList)) { // Get all possible sub-permutations
+                    permutation.Add(element); // Add that element
+                    result.Add(permutation);
+                }
+            }
+            return result;
+        }
+
     }
 
-    public class Instruction
-    {
-        public int Opcode;
-        public int FirstParamMode;
-        public int SecondParamMode;
-        public int ThirdParamMode;
-
-        public Instruction(int val)
-        {
-            string instr = val.ToString().PadLeft(5,'0');
-            this.Opcode = int.Parse(instr.Substring(3));
-            this.FirstParamMode = int.Parse(instr.Substring(2,1));
-            this.SecondParamMode = int.Parse(instr.Substring(1,1));
-            this.ThirdParamMode = int.Parse(instr.Substring(0,1));
-        }
-    }
-
-    public class IntCodeComputerDay5
+    public class IntCodeComputerDay7
     {
         public List<int> memory;
         public int input;
+        private readonly int phase;
+        private readonly bool runUntil99;
+        private bool phaseUsed;
         public List<int> outputs;
         private int iPointer;
-        public IntCodeComputerDay5(List<int> input, int inputValue)
+        public bool isDone;
+
+        public IntCodeComputerDay7(List<int> input, int inputValue, int phaseValue, bool runUntil99=true)
         {
             this.memory = new List<int>(input);
             this.input = inputValue;
+            this.phase = phaseValue;
+            this.runUntil99 = runUntil99;
+            this.phaseUsed = false;
             this.outputs = new List<int>();
             this.iPointer = 0;
+            this.isDone = false;
         }
 
         public new void Process()
@@ -87,6 +140,9 @@ namespace AOC2019
                         break;
                     case 4:
                         OpCode4(instruction, iPointer);
+                        if (!this.runUntil99){
+                            running = false;
+                        }
                         instructionLength = 2;
                         break;
                     case 5:
@@ -102,6 +158,7 @@ namespace AOC2019
                         instructionLength = OpCode8(instruction, iPointer);
                         break;
                     case 99:
+                        this.isDone = true;
                         running = false;
                         instructionLength = 0;
                         break;
@@ -195,7 +252,8 @@ namespace AOC2019
         private int OpCode3(Instruction instruction, int p)
         {
             int addressOne = instruction.FirstParamMode == 1 ? p + 1 : this.memory[p + 1];
-            this.memory[addressOne] = this.input;
+            this.memory[addressOne] = this.phaseUsed ? this.input : this.phase;
+            this.phaseUsed = true;
             return 2;
         }
 
