@@ -12,12 +12,14 @@ namespace AOC2019
             t.Start();
             var x = SolvePartOne();
             t.Stop();
-            Console.WriteLine($"Time taken for part 1: {t.Elapsed.ToString("g")}");
+            var t1 = t.Elapsed.ToString("g");
             t.Reset();
             t.Start();
             var y = SolvePartTwo();
             t.Stop();
-            Console.WriteLine($"Time taken for part 2: {t.Elapsed.ToString("g")}");
+            var t2 = t.Elapsed.ToString("g");
+            Console.WriteLine($"Time taken for part 1: {t1}");
+            Console.WriteLine($"Time taken for part 2: {t2}");
             return Tuple.Create(x, y);
         }
 
