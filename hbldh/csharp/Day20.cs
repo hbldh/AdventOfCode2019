@@ -68,8 +68,7 @@ namespace AOC2019
             }
             return "";
         }
-        
-        
+
         private List<(string portal, (int x, int y) position, bool isInnerPortal, int distance)> FindReachablePortals((int x, int y) position)
         {
             var reachablePortals = new List<(string portal, (int x, int y) position, bool isInnerPortal, int distance)>();
@@ -251,9 +250,9 @@ namespace AOC2019
             this.portalName2cells = new Dictionary<string, List<(int x, int y)>>();
 
             var cells = this.data.Trim('\n').Split('\n').Select(x => x.Trim('\n').ToCharArray().Select(v => v.ToString()).ToList()).ToList();
-
             this.size = (cells[0].Count, cells.Count);
 
+            // Find all pathways (nodes) and their connections
             for (int x = 2; x < cells[0].Count - 2; x++)
             {
                 for (int y = 2; y < cells.Count - 2; y++)
@@ -314,7 +313,6 @@ namespace AOC2019
             }
             //PrintMap();
         }
-    
         private void PrintMap()
         {
             var cells = this.data.Trim('\n').Split('\n').Select(x => x.ToCharArray().Select(v => v.ToString()).ToList()).ToList();

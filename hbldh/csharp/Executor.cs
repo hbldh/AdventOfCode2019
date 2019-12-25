@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 
@@ -40,12 +41,27 @@ namespace AOC2019
         private void ExecuteDay(int day)
         {
             EnsureData((int)day);
-            Type t = Type.GetType($"AOC2019.Day{day}");
-            IDay dayObj = (IDay)Activator.CreateInstance(t);
+            Type dayType = Type.GetType($"AOC2019.Day{day}");
+            IDay dayObj = (IDay)Activator.CreateInstance(dayType);
             Console.WriteLine($" -* Day {day} *-");
-            var solutions = dayObj.Solve();
-            Console.WriteLine($"Part 1: {solutions.Item1}");
-            Console.WriteLine($"Part 2: {solutions.Item2}");
+
+
+            Stopwatch t = new Stopwatch();
+            t.Start();
+            var x = dayObj.SolvePartOne();
+            t.Stop();
+            var t1 = t.Elapsed.ToString("g");
+            t.Reset();
+            Console.WriteLine($"Part 1: {x}");
+            Console.WriteLine($"Time taken for part 1: {t1}");
+            
+            t.Start();
+            var y = dayObj.SolvePartTwo();
+            t.Stop();
+            var t2 = t.Elapsed.ToString("g");
+            Console.WriteLine($"Part 2: {y}");
+            Console.WriteLine($"Time taken for part 2: {t2}");
+
             Console.WriteLine($"---------------------------");
         }
 

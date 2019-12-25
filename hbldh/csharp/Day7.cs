@@ -116,7 +116,7 @@ namespace AOC2019
             this.isDone = false;
         }
 
-        public new void Process()
+        public void Process()
         {
             
             var instructionLength = 0;

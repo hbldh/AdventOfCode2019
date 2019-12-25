@@ -63,7 +63,7 @@ namespace AOC2019
             this.iPointer = 0;
         }
 
-        public new void Process()
+        public void Process()
         {
             
             var instructionLength = 0;
